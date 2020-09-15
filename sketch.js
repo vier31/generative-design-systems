@@ -1,37 +1,58 @@
-const ITEM_SIZE = 500;
-const SIDES = 6;
+const CRYSTAL_SIZE = 150
+const SIDES = 6
 
-let PALETTE = [];
+// layout
+const MARGIN = CRYSTAL_SIZE / 2
+const COLUMNS = 3
+const ROWS = 4
+const PADDING = CRYSTAL_SIZE * 0.2
+const GRIDBOX = CRYSTAL_SIZE + PADDING
+const START = (CRYSTAL_SIZE / 2) + MARGIN
+
+let PALETTE = []
+ALL_CRYSTALS = []
 
 function setup() {
-  createCanvas(530, 530, SVG)
+  const totalX = START + GRIDBOX * COLUMNS
+  const totalY = START + GRIDBOX * ROWS
+  createCanvas(totalX, totalY, SVG)
 
   PALETTE = [
-    color(255, 52, 154),
-    color(4, 0, 152)
-  ];
+    color(255, 52, 154), // pink
+    color(4, 0, 152) // blue
+  ]
 
   noLoop()
   angleMode(DEGREES)
   rectMode(CENTER)
 }
 
-function guides() {
-  noFill()
-  stroke(PALETTE[0])
-  push()
-  translate(width / 2, height / 2)
-  ellipse(0, 0, ITEM_SIZE, ITEM_SIZE)
-
-  stroke(PALETTE[1])
-  const angle = 360 / SIDES
-  for (let i = 0; i < SIDES; i++) {
-    line(0, 0, 0, ITEM_SIZE / 2)
-    rotate(angle)
-  }
-  pop()
-}
-
 function draw() {
-  guides()
+  // go to a point on the screen and draw a crystal
+  // continue to do this until we run out of room
+  for (let x = 0; x < COLUMNS; x++) {
+    for (let y = 0; y < ROWS; y++) {
+      const posX = START + (x * GRIDBOX)
+      const posY = START + (y * GRIDBOX)
+      const crystal = makeCrystal({ x: posX, y: posY })
+      console.log(crystal)
+      ALL_CRYSTALS.push(crystal)
+    }
+  }
+
+  ALL_CRYSTALS.forEach(crystal => {
+    drawCrystal(crystal)
+  })
 }
+
+
+
+
+
+
+
+
+
+
+
+
